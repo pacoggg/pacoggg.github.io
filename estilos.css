@@ -1,30 +1,33 @@
-/* Estilos para el contenedor principal */
 .container {
     display: flex;
     flex-wrap: wrap;
     align-items: flex-start;
 }
 
-/* Estilos para el mapa */
 #map {
     flex: 2;
-    height: 500px; /* ajusta la altura según tus necesidades */
+    height: 400px;
 }
 
-/* Estilos para el contenedor de los datos */
 .info-box {
     flex: 1;
-    padding: 0 20px; /* ajusta el espaciado según tus necesidades */
+    padding: 0 20px;
 }
 
-/* Estilos para los botones */
 .buttons-container {
     display: flex;
     justify-content: space-between;
-    margin-top: 20px; /* ajusta el margen según tus necesidades */
+    margin-top: 20px;
 }
 
-/* Estilos para el botón de borrar */
 .delete-btn {
-    margin-top: 20px; /* ajusta el margen según tus necesidades */
+    margin-top: 20px;
+}
+
+@media (max-width: 767px) {
+    #map {
+        flex: 0 0 100%;
+        height: 100%;
+        min-height: 200px;
+    }
 }
