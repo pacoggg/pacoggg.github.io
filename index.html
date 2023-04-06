@@ -4,12 +4,13 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mapa de la Bicha 2.0</title>
+    <title>Mapa de la Bicha</title>
 </head>
 <body>
     <div id="map" style="height: 400px"></div>
     <button id="last-pos-btn" onclick="showLastPosition()">Ver última posición</button>
     <button id="last-ten-pos-btn" onclick="showLastTenPositions()">Ver últimas 10 posiciones</button>
+    <button id="refresh-btn" onclick="refreshPage()">Actualizar</button>
     <div id="info-box"></div>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB1LThV0ezs2NhXaFEWrGdy7R3h7aNtaqw&callback=initMap" async defer></script>
     <script>
@@ -102,8 +103,25 @@
                 </ul>
             `;
         }
+        function refreshPage() {
+        location.reload();
+        }
 
 
     </script>
+    <!-- Añade este nuevo script -->
+    <script>
+        // Establecer el tiempo de actualización en milisegundos (por ejemplo, 5000 ms = 5 segundos)
+        const tiempoActualizacion = 30000;
+
+        // Función para actualizar la página automáticamente
+        function actualizarPagina() {
+            location.reload();
+        }
+
+        // Establecer el temporizador para actualizar la página después del tiempo de actualización especificado
+        setTimeout(actualizarPagina, tiempoActualizacion);
+    </script>
+
 </body>
 </html>
