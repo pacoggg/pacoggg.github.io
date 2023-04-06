@@ -4,17 +4,32 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="estilos.css">
     <title>Mapa de la Bicha</title>
 </head>
 <body>
-    <div id="map" style="height: 400px"></div>
-    <button id="last-pos-btn" onclick="showLastPosition()">Ver última posición</button>
-    <button id="last-ten-pos-btn" onclick="showLastTenPositions()">Ver últimas 10 posiciones</button>
-    <button id="refresh-btn" onclick="refreshPage()">Actualizar</button>
-	
-    <div id="info-box"></div>
-	<h3>Borrar datos de ThingSpeak</h3>
-    <button onclick="confirmarBorrado()">Borrar datos</button>
+    <div class="container">
+        <div id="map"></div>
+        <div class="info-box">
+			<div id="info">
+				<h3>Última posición:</h3>
+				<ul>
+					<li>Latitud: <span id="lat"></span></li>
+					<li>Longitud: <span id="lng"></span></li>
+					<li>Fecha y hora: <span id="date"></span></li>
+					<li>Temperatura: <span id="temperature"></span></li>
+					<li>Humedad: <span id="humidity"></span></li>
+				</ul>
+			</div>	
+            <div class="buttons-container">
+                <button id="last-pos-btn" onclick="showLastPosition()">Ver última posición</button>
+                <button id="last-ten-pos-btn" onclick="showLastTenPositions()">Ver últimas 10 posiciones</button>
+                <button id="refresh-btn" onclick="refreshPage()">Actualizar</button>
+            </div>
+            <h3>Borrar datos de ThingSpeak</h3>
+            <button id="delete-btn" onclick="confirmarBorrado()">Borrar datos</button>
+        </div>
+    </div>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB1LThV0ezs2NhXaFEWrGdy7R3h7aNtaqw&callback=initMap" async defer></script>
     <script>
         let map;
@@ -23,8 +38,9 @@
         let lastPositionData = {};
         let response;
         function initMap() {
+			const channel = "2090424";
             const apiKey = "GIO7NQE7IRAEC42W";
-            const url = `https://api.thingspeak.com/channels/2090424/feeds.json?api_key=${apiKey}&results=100`;
+            const url = `https://api.thingspeak.com/channels/${channel}/feeds.json?api_key=${apiKey}&results=20`;
             const xhr = new XMLHttpRequest();
             xhr.onreadystatechange = () => {
                 if (xhr.readyState == 4 && xhr.status == 200) {
@@ -39,7 +55,7 @@
                     const lastPosition = positions[positions.length - 1];
                     map = new google.maps.Map(document.getElementById("map"), {
                         center: lastPosition,
-                        zoom: 18
+                        zoom: 17
                     });
                     positions.forEach((position, i) => {
                         const marker = new google.maps.Marker({
@@ -94,7 +110,7 @@
                 humidity: lastFeed.field4
             };
 
-            const infoBox = document.getElementById("info-box");
+            const infoBox = document.getElementById("info");
             infoBox.innerHTML = `
                 <h3>Última posición:</h3>
                 <ul>
@@ -114,32 +130,43 @@
     </script>
     <!-- Añade este nuevo script -->
     <script>
-        // Establecer el tiempo de actualización en milisegundos (por ejemplo, 5000 ms = 5 segundos)
-        const tiempoActualizacion = 30000;
-
-        // Función para actualizar la página automáticamente
         function actualizarPagina() {
-            location.reload();
+            // Coloca aquí el código para actualizar la página
+            var tiempoActualizacion = 30000; // 30 segundos (30,000 milisegundos)
+            setTimeout(function() {
+                location.reload(true);
+            }, tiempoActualizacion);
         }
-
-        // Establecer el temporizador para actualizar la página después del tiempo de actualización especificado
-        setTimeout(actualizarPagina, tiempoActualizacion);
+		setInterval(actualizarPagina, 30000);
     </script>
 	<script>
         function confirmarBorrado() {
-            // Mostrar el popup de confirmación
-            var resultado = confirm("¿Estás seguro de que quieres borrar los datos de ThingSpeak?");
-            if (resultado) {
-                // Si se confirma, realizar la acción de borrado
-                // Aquí puedes agregar el código que realiza la acción de borrado
-                // Por ejemplo, puedes hacer una petición a tu API para borrar los datos
-                console.log("Borrando los datos...");
-                // Agrega aquí el código de borrado
-            } else {
+		  // Mostrar un cuadro de diálogo de confirmación
+		  var confirmacion = confirm("¿Estás seguro de que deseas borrar todos los datos en ThingSpeak?");
+
+		  // Si se confirma el borrado
+		  // Si se confirma el borrado
+    if (confirmacion) {
+        // Realizar la solicitud de borrado a ThingSpeak
+        fetch('https://api.thingspeak.com/channels/2090424/feeds.xml?api_key=7845XZW2LYB09087', {
+		  method: 'DELETE',
+		  headers: {
+			'Content-Type': 'application/json'
+		  }
+		}).then(function(response) {
+		  if (response.ok) {
+			console.log('Datos borrados exitosamente');
+		  } else {
+			console.error('Fallo en el borrado de datos:', response.status);
+		  }
+		}).catch(function(error) {
+		  console.error('Error en la solicitud:', error);
+		});
+    }else {
                 // Si se cancela, no hacer nada
                 console.log("Cancelado");
             }
-        }
+		}
     </script>
 
 </body>

@@ -1,0 +1,30 @@
+/* Estilos para el contenedor principal */
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+}
+
+/* Estilos para el mapa */
+#map {
+    flex: 2;
+    height: 500px; /* ajusta la altura según tus necesidades */
+}
+
+/* Estilos para el contenedor de los datos */
+.info-box {
+    flex: 1;
+    padding: 0 20px; /* ajusta el espaciado según tus necesidades */
+}
+
+/* Estilos para los botones */
+.buttons-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px; /* ajusta el margen según tus necesidades */
+}
+
+/* Estilos para el botón de borrar */
+.delete-btn {
+    margin-top: 20px; /* ajusta el margen según tus necesidades */
+}
