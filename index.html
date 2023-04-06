@@ -11,7 +11,10 @@
     <button id="last-pos-btn" onclick="showLastPosition()">Ver última posición</button>
     <button id="last-ten-pos-btn" onclick="showLastTenPositions()">Ver últimas 10 posiciones</button>
     <button id="refresh-btn" onclick="refreshPage()">Actualizar</button>
+	
     <div id="info-box"></div>
+	<h3>Borrar datos de ThingSpeak</h3>
+    <button onclick="confirmarBorrado()">Borrar datos</button>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB1LThV0ezs2NhXaFEWrGdy7R3h7aNtaqw&callback=initMap" async defer></script>
     <script>
         let map;
@@ -121,6 +124,22 @@
 
         // Establecer el temporizador para actualizar la página después del tiempo de actualización especificado
         setTimeout(actualizarPagina, tiempoActualizacion);
+    </script>
+	<script>
+        function confirmarBorrado() {
+            // Mostrar el popup de confirmación
+            var resultado = confirm("¿Estás seguro de que quieres borrar los datos de ThingSpeak?");
+            if (resultado) {
+                // Si se confirma, realizar la acción de borrado
+                // Aquí puedes agregar el código que realiza la acción de borrado
+                // Por ejemplo, puedes hacer una petición a tu API para borrar los datos
+                console.log("Borrando los datos...");
+                // Agrega aquí el código de borrado
+            } else {
+                // Si se cancela, no hacer nada
+                console.log("Cancelado");
+            }
+        }
     </script>
 
 </body>
