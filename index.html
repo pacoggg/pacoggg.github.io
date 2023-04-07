@@ -16,6 +16,8 @@
 				<ul>
 					<li>Latitud: <span id="lat"></span></li>
 					<li>Longitud: <span id="lng"></span></li>
+                    <li>Longitud: <span id="spd"></span></li>
+                    <li>Longitud: <span id="sat"></span></li>
 					<li>Fecha y hora: <span id="date"></span></li>
 					<li>Temperatura: <span id="temperature"></span></li>
 					<li>Humedad: <span id="humidity"></span></li>
@@ -107,7 +109,9 @@
                 lng: lastPosition.lng(),
                 date: lastFeed.created_at,
                 temperature: lastFeed.field3,
-                humidity: lastFeed.field4
+                humidity: lastFeed.field4,
+                speed: lastFeed.field5,
+                satelite: lastFeed.field6
             };
 
             const infoBox = document.getElementById("info");
@@ -116,6 +120,8 @@
                 <ul>
                     <li>Latitud: ${lastPositionData.lat}</li>
                     <li>Longitud: ${lastPositionData.lng}</li>
+                    <li>Velocidad: ${lastPositionData.speed}</li>
+                    <li>Satélites: ${lastPositionData.satelite}</li>
                     <li>Fecha y hora: ${new Date(lastPositionData.date).toLocaleString()}</li>
                     ${lastPositionData.temperature ? `<li>Temperatura: ${lastPositionData.temperature}</li>` : ''}
                     ${lastPositionData.humidity ? `<li>Humedad: ${lastPositionData.humidity}</li>` : ''}
